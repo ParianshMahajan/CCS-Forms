@@ -1,0 +1,33 @@
+{
+    "id": "102797744322424279430",
+    "displayName": "Akarsh Srivastava",
+    "name": {
+        "familyName": "Srivastava",
+        "givenName": "Akarsh"
+    },
+    "emails": [
+        {
+            "value": "asrivastava2_be22@thapar.edu",
+            "verified": true
+        }
+    ],
+    "photos": [
+        {
+            "value": "https://lh3.googleusercontent.com/a/AAcHTteR72t5yLyIaQ2h2Hnb_eOZWSTJcN0Qv9SJICwvn3J-=s96-c"
+        }
+    ],
+    "provider": "google",
+    "_raw": "{\n  \"sub\": \"102797744322424279430\",\n  \"name\": \"Akarsh Srivastava\",\n  \"given_name\": \"Akarsh\",\n  \"family_name\": \"Srivastava\",\n  \"profile\": \"https://plus.google.com/102797744322424279430\",\n  \"picture\": \"https://lh3.googleusercontent.com/a/AAcHTteR72t5yLyIaQ2h2Hnb_eOZWSTJcN0Qv9SJICwvn3J-\\u003ds96-c\",\n  \"email\": \"asrivastava2_be22@thapar.edu\",\n  \"email_verified\": true,\n  \"locale\": \"en\",\n  \"hd\": \"thapar.edu\"\n}",
+    "_json": {
+        "sub": "102797744322424279430",
+        "name": "Akarsh Srivastava",
+        "given_name": "Akarsh",
+        "family_name": "Srivastava",
+        "profile": "https://plus.google.com/102797744322424279430",
+        "picture": "https://lh3.googleusercontent.com/a/AAcHTteR72t5yLyIaQ2h2Hnb_eOZWSTJcN0Qv9SJICwvn3J-=s96-c",
+        "email": "asrivastava2_be22@thapar.edu",
+        "email_verified": true,
+        "locale": "en",
+        "hd": "thapar.edu"
+    }
+}
