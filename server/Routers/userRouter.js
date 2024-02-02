@@ -1,5 +1,5 @@
 const express=require('express');
-const { createFile, deleteFile } = require('../Controllers/UserFuncs');
+const { createFile, deleteFile, test, register } = require('../Controllers/UserFuncs');
 const app=express();
 const userRouter=express.Router();
 
@@ -9,14 +9,8 @@ const userRouter=express.Router();
 
 
 userRouter
-.route('/createSchema')
-.get(createFile)
-
-
-// Drop Collection
-userRouter
-.route('/DropSchema')
-.get(deleteFile)
+.route('/register')
+.get(register)
 
 
 

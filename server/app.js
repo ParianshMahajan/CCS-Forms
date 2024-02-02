@@ -12,6 +12,7 @@ app.use(cors());
 
 
 var bodyParser = require('body-parser');
+const adminRouter = require('./Routers/adminRouter.js');
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
@@ -31,4 +32,5 @@ startRoutes();
 
 function startRoutes(){
   app.use('/user',require('./Routers/userRouter.js'));
+  app.use('/admin',adminRouter);
 }
