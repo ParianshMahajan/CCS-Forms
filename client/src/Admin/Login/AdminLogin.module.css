@@ -1,0 +1,190 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600&display=swap');
+
+.loginContainer {
+  margin: 0;
+  padding: 0;
+  font-family: 'Outfit', sans-serif;
+  background: conic-gradient(from 90deg, #DEF5FF, #FEFFFF, #FFFFFF);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.leftSide {
+  flex: 1;
+  text-align: center;
+  padding: 20px;
+  color: black;
+}
+
+.rightSide {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo {
+  max-width: 60%;
+  height: auto;
+}
+
+.titleRecSys {
+  letter-spacing: 5px;
+  text-align: center;
+  color: #5B5B5B;
+  font-weight: 600;
+  font-size: 60px;
+  margin: 40px;
+}
+
+.welcomeText {
+  letter-spacing: 3px;
+  color: #484848;
+  font-weight: 300;
+  padding-left: 4%;
+  font-size: 70px;
+  margin-bottom: 20px;
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+}
+
+.passwordInput {
+  font-size: 25px;
+  color: black;
+  width: 500px;
+  padding: 20px 30px;
+  border: 1px solid #ccc;
+  border-radius: 40px;
+  box-sizing: border-box;
+  margin-right: 30px;
+  margin-top: 1%;
+}
+
+.passwordInput::placeholder {
+  color: #bfbfbf; 
+}
+
+
+.rightTop {
+  margin-bottom: 70px;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-end;  
+}
+
+.rightBottom {
+  flex: 1;
+}
+
+.msg{
+  color: rgb(4, 150, 4);
+  font-weight: normal;
+  display: flex;
+  padding: 0% 0% 2% 3%;
+}
+.err{
+  color: red;
+  font-weight: normal;
+  display: flex;
+  padding: 0% 0% 2% 3%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  /* LOADER */
+  .loader {
+    margin-top: 5%;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    border: 3px solid;
+    border-color: #36BBBD #36BBBD transparent transparent;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+    scale: 1;
+  }
+  .loader::after,
+  .loader::before {
+    content: '';  
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    border: 3px solid;
+    border-color: transparent transparent #fff #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    box-sizing: border-box;
+    animation: rotationBack 0.5s linear infinite;
+    transform-origin: center center;
+  }
+  .loader::before {
+    width: 32px;
+    height: 32px;
+    border-color: #fff #fff transparent transparent;
+    animation: rotation 1.5s linear infinite;
+  }
+      
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  } 
+  @keyframes rotationBack {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(-360deg);
+    }
+  }
+      
+
+
+
+
+  
+.signinButton {
+  font-size: 40px;
+  width: 70px;
+  height: 70px;
+  background-color: #36BBBD;
+  color: #fff;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+
+

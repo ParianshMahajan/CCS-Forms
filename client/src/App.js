@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import TestFile from "./Pages/TestFile";
+import config from "./config";
+import AdminLogin from "./Admin/Login/AdminLogin";
 
 
 function App() {
@@ -9,7 +10,15 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<TestFile/>}></Route>
+          {/* <Route path="/" element={</>}</Route> */}
+
+
+
+          {/* Admin  */}
+          <Route path={config.adminRoute} element={<AdminLogin/>}></Route>
+
+
+
         </Routes>
       </BrowserRouter>
     </div>

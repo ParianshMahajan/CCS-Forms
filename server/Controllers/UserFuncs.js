@@ -7,6 +7,7 @@ dotenv.config({ path: "./config.env" });
 
 const mongoose  = require("mongoose");
 const Forms = require('../models/Forms');
+const { sendMail } = require('../middlewares/nodeMailer');
 const Schema = mongoose.Schema;
 
 
@@ -28,30 +29,6 @@ const Schema = mongoose.Schema;
 //     }
 // });
 
-let data=[
-    {
-        PropName:"Name",
-        Properties:{
-            type:'String',
-            required: true,
-        },
-    },
-    {
-        PropName:"RollNumber",
-        Properties:{
-            type:'Number',
-        },
-    },
-    {
-        PropName:"Password",
-        Properties:{
-            type:'String',
-            required: true,
-            minLength:8,
-        },
-    },
-]
-
 
 
 
@@ -59,8 +36,8 @@ let data=[
 // Creating a new Collection
 module.exports.register = async function createFile(req, res) {
         try {
-            let id = "65bd6daafef289056e166e76";
-            let form = await Forms.findById(id);
+            let data=req.body;
+            let form = await Forms.findById(data.Objectid);
             
             const dynamicSchemaObject = {};
 
@@ -78,20 +55,17 @@ module.exports.register = async function createFile(req, res) {
             
             const dynamicSchema = new Schema(dynamicSchemaObject);
 
-            let newModel=mongoose.model("newSchema", dynamicSchema);
+            let newModel=mongoose.model(form.Name, dynamicSchema);
 
-            let userData = {
-                Name: "Pariansh",
-                RollNumber: 102217024,
-                Password: 123456,
-            }
+        
     
             // Create a new document using the dynamic model
-            let user = await newModel.create(userData);
+            let user = await newModel.create(data.userData);
     
+            await sendMail(user.Email);
+
             res.json({
                 status: true,
-                schema: form.Schema
             });
 
     } catch (error) {
@@ -99,118 +73,6 @@ module.exports.register = async function createFile(req, res) {
             status: false,
             message: error.message,
             errcode: error.code
-        })
-    }
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Dropping the Collection
-module.exports.deleteFile = async function deleteFile(req, res) {
-    try {
-
-        let fileName = 'NewCollection';
-        let filePath = path.join(__dirname, `../models/${fileName}.js`);
-
-        await fs.unlink(filePath);
-
-
-
-        let controllerFilePath = path.join(__dirname, 'UserFuncs.js');
-        let data = await fs.readFile(controllerFilePath, 'utf-8');
-        let lines = data.split('\n');
-
-        let lineToRemove=`const ${fileName} = require('../models/${fileName}`
-
-        let indexToRemove = lines.findIndex(line => line.includes(lineToRemove));
-        lines.splice(indexToRemove, 1);
-        const updatedContent = lines.join('\n');
-        await fs.writeFile(controllerFilePath, updatedContent);
-
-        console.log("bye");
-        
-
-        res.json({
-            status: true,
-            });
-
-    } catch (error) {
-        res.json({
-            status: false,
-            message: error.message,
-            errcode: error.code
-        })
-    }
-
-}
-
-
-
-
-
-
-
-
-// Dropping the Collection
-module.exports.test = async function test(req, res) {
-    try {
-
-        const dynamicSchema = new Schema({
-            Name: {
-                type: String
-            },
-            RollNumber: {
-                type: Number
-            },
-            Description:{
-                type:String,
-            },
-            Status:{
-                type:Boolean,
-        
-                // 1-->Active
-                // 0-->Not Active
-            },
-        });
-        
-            
-        let newModel=mongoose.model("newSchema", dynamicSchema);
-
-        let Userdata={
-            Name:"Kanishk",
-            RollNumber:102217023,
-            Description:"lorem12",
-            Status:false
-        }   
-
-        let data=await newModel.create(Userdata);
-
-
-        res.json({
-            data:data,
-            status: true,
-        });
-
-    } catch (error) {
-        res.json({
-            status: false,
-            message: error.message,
         })
     }
 

@@ -10,7 +10,7 @@ const userRouter=express.Router();
 
 userRouter
 .route('/register')
-.get(register)
+.post(register)
 
 
 

@@ -2,10 +2,10 @@ const mongoose  = require("mongoose");
 
 
 const Schema = mongoose.Schema;
-const adminsSchema = new Schema({
+const formSchema = new Schema({
     Name: {
         type: String,
-        unique:true
+        unique:[true,"Form with same name already exists"]
     },
     Description:{
         type:String,
@@ -17,16 +17,37 @@ const adminsSchema = new Schema({
         // 1-->Active
         // 0-->Not Active
     },
+   
     Properties:{
         type:Array,
+
+
+        // <-------- Format -------->
+
+        // [{
+        //     PropName:"Name",                // Backend Schema Property name                            
+        //     Value:"Enter your name.",       // Frontend Question Field            
+        //     Options:[],                     // In case of mcqs or checkboxes 
+        //     minLength:8,                    // In case of Password 
+        //     type:"String",                  // Frontend input type 
+        //     Properties:{
+        //         type:'String',
+        //         required: true,
+        //         unique: false,
+        //     },
+        // },]
+
+        
     },
     BackLink:{
         type:String,
-        unique:true
+        unique:[true,"BackLink is already in use"]
     },
-    Theme:{
-        type:String,
-    },
+
+
+    // Theme:{
+    //     type:String,
+    // },
 });
 
     
@@ -34,4 +55,4 @@ const adminsSchema = new Schema({
 
 
 
-module.exports = mongoose.model("admin", adminsSchema);
+module.exports = mongoose.model("Forms", formSchema);
