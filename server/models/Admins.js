@@ -12,6 +12,10 @@ const adminSchema = new Schema({
     OTP:{
         type:String,
     },
+    TimeStamp:{
+        type:Date,
+        // For OTP
+    },
 });
 
     

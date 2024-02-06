@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import config from "./config";
-import AdminLogin from "./Admin/Login/AdminLogin";
+import AdminLogin from "./Admin/Pages/Login/AdminLogin";
 
 
 function App() {

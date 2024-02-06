@@ -12,7 +12,7 @@ const adminUsername=process.env.adminUsername;
 
 
 const Forms = require('../models/Forms');
-const AdminEmail = require('../models/AdminEmail');
+const Admins = require('../models/Admins');
 const { sendMail } = require('../middlewares/nodeMailer');
 
 
@@ -91,14 +91,16 @@ module.exports.verifyCredential = async function verifyCredential(req, res) {
 
 
 
+
 // Verify the Email and generate the otp
 module.exports.createOTP = async function createOTP(req, res) {
   try {
     let data = req.body;
-    let admin=await AdminEmail.findOne({Email:data.Email})
+    let admin=await Admins.findOne({Email:data.Email})
     if(admin){
         let otp = generateRandomString(6);
         admin.OTP=otp;
+        admin.TimeStamp=Date.now();
         await admin.save();
         
         await sendMail(admin.Email,"OTP",otp);
@@ -124,35 +126,73 @@ module.exports.createOTP = async function createOTP(req, res) {
 
 
 
+
+
+let count=0;
+
 // Verify OTP
 module.exports.verifyOtp = async function verifyOtp(req, res) {
   try {
     let data = req.body;
-    let admin=await AdminEmail.findOne({Email:data.Email});
-    console.log(admin);
+    let admin=await Admins.findOne({Email:data.Email});
     if(data.OTP===admin.OTP){
-            
-        admin.OTP="";
-        await admin.save();
 
-        const payload={
-          Username:data.Username,
-          Password:data.Password,
-          Role:"Admin"
+        let genTime = new Date(admin.TimeStamp).getTime();
+        let currTime = new Date(Date.now()).getTime(); 
+
+
+        if (currTime-genTime < 300000) {        //5mins
+            admin.OTP="";
+            await admin.save();
+
+            const payload={
+              Username:data.Username,
+              Password:data.Password,
+              Role:"Admin"
+            }
+
+            const token = jwt.sign(payload, secret_key);
+        
+            res.json({
+              status: true,
+              token: token,
+            });
+
         }
-        const token = jwt.sign(payload, secret_key);
-    
-        res.json({
-          status: true,
-          token: token,
-        });
-      }
-      else{
-        // Invalid credentials
-        res.json({
-          status: false,
-        });
-      }
+        else{
+            admin.OTP="";
+            await admin.save();
+        
+            res.json({
+              status: true,
+              TimeOver: true,
+            });
+        }
+
+
+
+    }
+
+    else{
+        // Invalid OTP
+        count++;
+        if(count==3){
+            admin.OTP="";
+            await admin.save();
+            count=0;
+
+            res.json({
+                status: false,
+                count:3,
+            });
+        }
+        else{
+            res.json({
+                status: false,
+                count:count
+            });
+        }
+    }
 
   } catch (error) {
     res.json({
@@ -339,7 +379,7 @@ module.exports.test = async function test(req, res) {
             Email:"pmahajan1_be22@thapar.edu"
         }
 
-        let admin=await AdminEmail.create(data);
+        let admin=await Admins.create(data);
 
         res.json({
             status: true,

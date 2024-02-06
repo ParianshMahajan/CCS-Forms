@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import { motion } from "framer-motion";
 
-import config from "../../config";
+import config from "../../../config";
 import styles from "./AdminLogin.module.css";
 
 import ccsLogo from "../../Assets/CCS_logo.png";
@@ -56,7 +56,7 @@ const AdminLogin = () => {
 
   // SUBMIT The CREDENTIALS
   const [msg, setMsg] = useState("");
-  const [showErr, setShowErr] = useState(false);
+  const [showErr, setShowErr] = useState("");
   const [data, setData] = useState({
     Username: "",
     Password: "",
@@ -92,10 +92,10 @@ const AdminLogin = () => {
       } 
       else {
         setLoader(false);
-        setShowErr(true);
+        setShowErr("Incorrect Credentials !");
         setMsg("");
         setTimeout(()=>{
-          setShowErr(false);
+          setShowErr("");
         },3000);
       }
     });
@@ -104,6 +104,40 @@ const AdminLogin = () => {
 
 
 
+
+
+  // CountDown of 5 Mins
+  const [countdown, setCountdown] = useState(300); // 300 seconds = 5 minutes
+  const [isActive, setIsActive] = useState(false);
+
+
+  useEffect(() => {
+    let timer;
+
+    if (isActive) {
+      timer = setInterval(() => {
+        setCountdown((prevCountdown) => {
+          if (prevCountdown > 0) {
+            return prevCountdown - 1;
+          } else {
+            clearInterval(timer); // Stop the timer when countdown reaches 0
+            setShowErr(`OTP is reset. Please try again!`);
+            setTimeout(()=>{
+              window.location.reload();
+            },1500)
+            return 0;
+          }
+        });
+      }, 1000);
+    }
+
+    return () => clearInterval(timer);
+  }, [isActive]);
+
+  const minutes = Math.floor(countdown / 60);
+  const seconds = countdown % 60;
+
+  
 
   // SUBMITTING EMAIL
   const [otp,showOtp]=useState(false);
@@ -113,17 +147,17 @@ const AdminLogin = () => {
     e.preventDefault();
     setLoader(true);
     axios.post(url2, data).then((res) => {
-
       let data = res.data;
       if (data.status === true){
 
         setLoader(false);
-        
         setMsg("OTP sent successfully!");
         showEmail(false);
+        setIsActive(true);
+        
         setTimeout(()=>{
           setMsg("");
-        },3000)
+        },2000)
         setTimeout(()=>{
           showOtp(true);
         },1000)
@@ -131,17 +165,22 @@ const AdminLogin = () => {
       } 
       else {
         setLoader(false);
-        setShowErr(true);
+        setShowErr("Invalid Email !");
         setMsg("");
         setTimeout(()=>{
-          setShowErr(false);
+          setShowErr("");
         },3000);
       }
     });
   };
 
  
+
+
  
+
+
+  
   // SUBMITTING OTP
   const url3 = config.apiurl + "/admin/signin/otp";
   const submitOTP = (e) => {
@@ -150,17 +189,27 @@ const AdminLogin = () => {
     axios.post(url3, data).then((res) => {
       
       let data = res.data;
-      console.log(data);
       if (data.status == true){
         createCookie("AdminLoggedIn", data.token, 7);
         navigate(config.adminRoute+'/dashboard');
       } 
       else {
         setLoader(false);
-        setShowErr(true);
         setMsg("");
+        
+        if(data.count!=3){
+          setShowErr(`Incorrect OTP ! ${3-(data.count)} attempt left`);
+        }
+        if(data.count==3){
+          setShowErr(`OTP is reset. Please try again!`);
+          setTimeout(()=>{
+            window.location.reload();
+          },1500)
+        }
+        
+        
         setTimeout(()=>{
-          setShowErr(false);
+          setShowErr("");
         },3000);
       }
     });
@@ -255,6 +304,17 @@ const AdminLogin = () => {
               </button>
             </form>
           </div>
+          {isActive && (
+            <motion.div
+              initial={{ opacity: 0, y: -50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 50 }}
+              transition={{ duration: 0.3 }}
+              className={styles.countDown}
+            >
+              <h3>{`${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')} time remaining.`}</h3>
+            </motion.div>
+          )}
           {msg!="" && (
             <motion.div
               initial={{ opacity: 0, y: -50 }}
@@ -266,7 +326,7 @@ const AdminLogin = () => {
               <h3>{msg}</h3>
             </motion.div>
           )}
-          {showErr && (
+          {showErr!="" && (
             <motion.div
               initial={{ opacity: 0, y: -50 }}
               animate={{ opacity: 1, y: 0 }}
@@ -274,7 +334,7 @@ const AdminLogin = () => {
               transition={{ duration: 0.3 }}
               className={styles.err}
             >
-              <h3>Incorrect Credentials !</h3>
+              <h3>{showErr}</h3>
             </motion.div>
           )}
         </div>
