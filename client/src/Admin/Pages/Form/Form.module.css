@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600&display=swap');
+
+.main {
+  margin: 0;
+  padding: 0;
+  font-family: 'Outfit', sans-serif;
+  background: conic-gradient(from 90deg, #DEF5FF, #DEF5FF, #DEF5FF);
+  display: flex;
+  height: 100%;
+  width: 60%;
+}

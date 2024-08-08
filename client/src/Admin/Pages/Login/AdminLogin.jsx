@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import config from "../../../config";
 import styles from "./AdminLogin.module.css";
 
-import ccsLogo from "../../Assets/CCS_logo.png";
+import ccsLogo from "../../../Assets/CCS_logo.png";
 
 const AdminLogin = () => {
   const navigate = useNavigate();

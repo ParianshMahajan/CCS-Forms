@@ -1,4 +1,9 @@
 import React, { useState } from 'react'
+import Navbar from '../../Components/Navbar/Navbar';
+import styles from './Form.module.css';
+import Fields from '../../Components/Fields /Fields';
+import Settings from '../../Components/Settings/Settings';
+import Button from '@mui/material/Button';
 
 const Form = () => {
 
@@ -81,36 +86,51 @@ const Form = () => {
 
   return (
     <div>
-        <form>
+    <Navbar/>
+    <div className=" flex min-h-screen">
+        <Fields/>
+        <div className={styles.main}>
+            <form className='flex flex-col items-center w-full '>
+              <div className="border-2 border-red-800 w-[80%] rounded-2xl mt-5 flex flex-col items-center h-[100vh]">
 
-            <input
-              type="text"
-              id="Name"
-              value={data.Name}
-              name="Name"
-              placeholder='Form Name'
-              required={true}
-              onChange={(e)=>handle(e)}
-            />
+                <input
+                  type="text"
+                  id="Name"
+                  value={data.Name}
+                  name="Name"
+                  placeholder='Form Name'
+                  className='px-4 py-2 my-5 border-black border-2'
+                  required={true}
+                  onChange={(e)=>handle(e)}
+                />
 
-            <input
-              type="text"
-              id="Description"
-              value={data.Description}
-              name="Description"
-              placeholder='Form Description'
-              required={true}
-              onChange={(e)=>handle(e)}
-            />
+                <textarea
+                  type="text"
+                  id="Description"
+                  value={data.Description}
+                  name="Description"
+                  className='px-4 py-2 border-2 border-black w-[90%] resize-none'
+                  placeholder='Form Description'
+                  required={true}
+                  onChange={(e)=>handle(e)}
+                />
 
 
 
-            {fields.map((el)=>{
-                
-            })}
+                {fields.map((el)=>{
 
-        </form>
+                })}
+                <div className="mt-20 ">
+                  <Button variant="contained" className='w-[300px]'>
+                    SUBMIT
+                  </Button>
+                </div>
+                </div>
+            </form>
+        </div>
+        <Settings/>
     </div>
+  </div>
   )
 }
 

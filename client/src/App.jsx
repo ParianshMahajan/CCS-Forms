@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import config from "./config";
 import AdminLogin from "./Admin/Pages/Login/AdminLogin";
+import Form from "./Admin/Pages/Form/Form";
 
 
 function App() {
@@ -10,8 +11,8 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          {/* <Route path="/" element={</>}</Route> */}
-
+          {/* <Route path="/" element={</>}</Route> */}\
+          <Route path="/form" element={<Form/>}></Route>
 
 
           {/* Admin  */}
